@@ -1,2 +1,2 @@
 CC = gcc
-CFLAGS = -std=c99
+CFLAGS = -Wall -Wextra -std=c99
