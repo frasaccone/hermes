@@ -2,7 +2,7 @@
 
 include config.mk
 
-SOURCES = hermes.c socket.c
+SOURCES = hermes.c socket.c http.c
 
 hermes: $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $^
