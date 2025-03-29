@@ -2,6 +2,6 @@
 #define SOCKET_H
 
 int
-create_socket();
+create_socket(unsigned int port);
 
 #endif
