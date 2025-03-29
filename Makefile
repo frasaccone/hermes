@@ -2,13 +2,15 @@
 
 include config.mk
 
-hermes: hermes.o
+SOURCES = hermes.c socket.c
+
+hermes: $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $^
 
-hermes.o: hermes.c
-	$(CC) $(CFLAGS) -c $<
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f hermes hermes.o
+	rm -f hermes *.o
 
 .PHONY: clean
