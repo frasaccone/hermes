@@ -6,4 +6,9 @@
 int
 create_socket(unsigned int port);
 
+/* accepts a connection from the server socket and returns the client socket
+   file descriptor */
+int
+accept_client(int server_socket_fd);
+
 #endif

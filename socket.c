@@ -32,3 +32,14 @@ create_socket(unsigned int port) {
 
 	return socket_fd;
 }
+
+int
+accept_client(int server_socket_fd) {
+	struct sockaddr_in client_address;
+	socklen_t client_address_length = sizeof(client_address);
+	int client_socket_fd = accept(server_socket_fd,
+	                              (struct sockaddr *)&client_address,
+	                              &client_address_length);
+
+	return client_socket_fd;
+}
