@@ -20,6 +20,12 @@ main(int argc, char *argv[]) {
 			return 1;
 		}
 
+		/* if argument[2] is a non-null character */
+		if (argument[2]) {
+			print_usage(program_name);
+			return 1;
+		}
+
 		switch (argument[1]) {
 		case 'p':
 			if (!value_exists) {
