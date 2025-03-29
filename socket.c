@@ -24,5 +24,11 @@ create_socket(unsigned int port) {
 		exit(1);
 	}
 
+	if (listen(socket_fd, 3) == -1) {
+		printf("error: listen on socket\n");
+		close(socket_fd);
+		exit(1);
+	}
+
 	return socket_fd;
 }
