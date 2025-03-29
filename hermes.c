@@ -35,5 +35,10 @@ main(int argc, char *argv[]) {
 		}
 	}
 
+	if (port < 1 || port > 65535) {
+		printf("error: port must be between 1 and 65535.");
+		return 1;
+	};
+
 	return 0;
 }
