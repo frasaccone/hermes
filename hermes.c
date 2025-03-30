@@ -29,12 +29,13 @@ main(int argc, char *argv[]) {
 			return 1;
 		}
 
+		if (!value_exists) {
+			print_usage(program_name);
+			return 1;
+		}
+
 		switch (argument[1]) {
 		case 'p':
-			if (!value_exists) {
-				print_usage(program_name);
-				return 1;
-			}
 			port = atoi(argv[i + 1]);
 			i++;
 			break;
