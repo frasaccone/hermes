@@ -1,6 +1,8 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+#define HTTP_REQUEST_PATH_MAX_LENGTH 256
+
 enum http_request_method {
 	GET,
 	HEAD,
@@ -20,6 +22,11 @@ enum http_response_status {
 	REQUEST_TIMEOUT,
 	REQUEST_TOO_LARGE,
 	VERSION_NOT_SUPPORTED,
+};
+
+struct http_request {
+	enum http_request_method method;
+	char path[HTTP_REQUEST_PATH_MAX_LENGTH];
 };
 
 #endif
