@@ -7,7 +7,7 @@
 
 int
 create_socket(unsigned int port) {
-	int socket_fd = socket(AF_INET6, SOCK_STREAM, 0);
+	int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	struct sockaddr_in address;
 
 	if (socket_fd == -1) {
@@ -15,7 +15,7 @@ create_socket(unsigned int port) {
 		exit(1);
 	}
 
-	address.sin_family = AF_INET6;
+	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(port);
 
