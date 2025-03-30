@@ -49,6 +49,26 @@ enum http_response_status {
 	VERSION_NOT_SUPPORTED,
 };
 
+static const struct {
+	enum http_response_status status;
+	unsigned int code;
+	const char *message;
+} status_map[] = {
+	{ BAD_REQUEST          , 400, "Bad Request" },
+	{ FORBIDDEN            , 403, "Forbidden" },
+	{ INTERNAL_SERVER_ERROR, 500, "Internal Server Error" },
+	{ METHOD_NOT_ALLOWED   , 405, "Method Not Allowed" },
+	{ MOVED_PERMANENTLY    , 301, "Moved Permanently" },
+	{ NOT_FOUND            , 404, "Not Found" },
+	{ NOT_MODIFIED         , 304, "Not Modified" },
+	{ OK                   , 200, "OK" },
+	{ PARTIAL_CONTENT      , 206, "Partial Content" },
+	{ RANGE_NOT_SATISFIABLE, 416, "Range Not Satisfiable" },
+	{ REQUEST_TIMEOUT      , 408, "Request Timeout" },
+	{ REQUEST_TOO_LARGE    , 413, "Request Entity Too Large" },
+	{ VERSION_NOT_SUPPORTED, 505, "HTTP Version Not Supported" },
+};
+
 struct http_request {
 	enum http_request_method method;
 	char path[HTTP_REQUEST_PATH_MAX_LENGTH];
