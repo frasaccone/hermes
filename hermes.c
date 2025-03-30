@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "socket.h"
 
+#define DIRECTORY_INDEX_MAX_LENGTH 32
+
 void
 print_usage(char *program_name) {
-	printf("usage: %s [-p port]", program_name);
+	printf("usage: %s [-p port] [-i file]", program_name);
 }
 
 int
 main(int argc, char *argv[]) {
-	char *program_name = argv[0];
+	char *program_name = argv[0],
+	     directory_index[32] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
 
@@ -37,6 +41,17 @@ main(int argc, char *argv[]) {
 		switch (argument[1]) {
 		case 'p':
 			port = atoi(argv[i + 1]);
+			i++;
+			break;
+		case 'i':
+			if (strlen(argv[i + 1]) >= DIRECTORY_INDEX_MAX_LENGTH) {
+				printf("error: directory index must be less than "
+				       "%u characters",
+				       DIRECTORY_INDEX_MAX_LENGTH);
+				return 1;
+			}
+			strncpy(directory_index, argv[i + 1], sizeof(directory_index) -1);
+			directory_index[sizeof(directory_index) -1] = '\0';
 			i++;
 			break;
 		default:
