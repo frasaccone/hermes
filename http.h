@@ -54,4 +54,11 @@ struct http_request {
 	char path[HTTP_REQUEST_PATH_MAX_LENGTH];
 };
 
+struct http_response {
+	enum http_response_status status;
+	const char *content_type;
+	char *body;
+	size_t body_length;
+};
+
 #endif
