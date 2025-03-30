@@ -8,7 +8,7 @@
 
 void
 print_usage(char *program_name) {
-	printf("usage: %s [-p port] [-i file]", program_name);
+	printf("usage: %s [-p port] [-i file]\n", program_name);
 }
 
 int
