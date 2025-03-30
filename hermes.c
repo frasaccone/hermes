@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "socket.h"
+
 void
 print_usage(char *program_name) {
 	printf("usage: %s [-p port]", program_name);
@@ -9,7 +11,8 @@ print_usage(char *program_name) {
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0];
-	int i, port = 80;
+	int i, port = 80,
+	    server_socket_fd;
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
@@ -45,6 +48,16 @@ main(int argc, char *argv[]) {
 		printf("error: port must be between 1 and 65535.");
 		return 1;
 	};
+
+	server_socket_fd = create_socket(port);
+
+	while (1) {
+		int client_socket_fd = accept_client(server_socket_fd),
+		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
+		char *buffer = malloc(buffer_size);
+
+		read_client_request(client_socket_fd, buffer, buffer_size);
+	}
 
 	return 0;
 }
