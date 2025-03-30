@@ -1,7 +1,9 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
+#include <unistd.h>
 
 #include "socket.h"
 
@@ -42,4 +44,32 @@ accept_client(int server_socket_fd) {
 	                              &client_address_length);
 
 	return client_socket_fd;
+}
+
+void
+read_client_request(int client_socket_fd,
+                    char *buffer,
+                    unsigned int buffer_size) {
+	if (buffer == NULL || buffer_size == 0) {
+		printf("error: invalid buffer provided in read_client_request");
+		return;
+	}
+
+	memset(buffer, 0, buffer_size);
+
+	ssize_t bytes_received = recv(client_socket_fd,
+	                              buffer,
+	                              buffer_size - 1,
+	                              0);
+
+	if (bytes_received <= 0) {
+		return;
+	}
+
+	if (bytes_received < buffer_size) {
+		buffer[bytes_received] = '\0';
+		return;
+	}
+
+	buffer[buffer_size - 1] = '\0';
 }

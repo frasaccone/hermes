@@ -11,4 +11,10 @@ create_socket(unsigned int port);
 int
 accept_client(int server_socket_fd);
 
+/* writes the client request to a buffer */
+void
+read_client_request(int client_socket_fd,
+                    char *buffer,
+                    unsigned int buffer_size);
+
 #endif
