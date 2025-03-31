@@ -5,15 +5,18 @@
 #include "socket.h"
 
 #define DIRECTORY_INDEX_MAX_LENGTH 32
+#define USER_MAX_LENGTH 32
 
 void
 print_usage(char *program_name) {
-	printf("usage: %s [-p port] [-i file]\n", program_name);
+	printf("usage: %s [-p port] [-i file] [-u user]\n",
+	       program_name);
 }
 
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
+	     user[USER_MAX_LENGTH] = "nobody",
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
@@ -52,6 +55,17 @@ main(int argc, char *argv[]) {
 			}
 			strncpy(directory_index, argv[i + 1], sizeof(directory_index) - 1);
 			directory_index[sizeof(directory_index) - 1] = '\0';
+			i++;
+			break;
+		case 'u':
+			if (strlen(argv[i + 1]) >= USER_MAX_LENGTH) {
+				printf("error: the user length must be less than "
+				       "%u characters",
+				       USER_MAX_LENGTH);
+				return 1;
+			}
+			strncpy(user, argv[i + 1], sizeof(user) - 1);
+			user[sizeof(user) - 1] = '\0';
 			i++;
 			break;
 		default:
