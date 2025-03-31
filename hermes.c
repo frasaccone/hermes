@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 #include "socket.h"
 #include "utils.h"
@@ -104,40 +102,29 @@ main(int argc, char *argv[]) {
 
 	server_socket_fd = create_socket(port);
 
-	switch (fork()) {
-	case -1:
-		print_error("error: could not fork process.");
-		break;
-	case 0:
-		/* Child process */
+	while (1) {
+		int client_socket_fd,
+		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
+		char *buffer = malloc(buffer_size);
 
-		while (1) {
-			int client_socket_fd,
-			    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
-			char *buffer = malloc(buffer_size);
+		client_socket_fd = accept_client(server_socket_fd);
 
-			client_socket_fd = accept_client(server_socket_fd);
-
-			if (client_socket_fd == -1) {
-				free(buffer);
-				close_socket(client_socket_fd);
-				continue;
-			}
-
-			if (read_client_request(client_socket_fd,
-			                        buffer,
-			                        buffer_size) == -1) {
-				free(buffer);
-				close_socket(client_socket_fd);
-				continue;
-			}
-
+		if (client_socket_fd == -1) {
 			free(buffer);
 			close_socket(client_socket_fd);
+			continue;
 		}
 
-		break;
-	default:
+		if (read_client_request(client_socket_fd,
+		                        buffer,
+		                        buffer_size) == -1) {
+			free(buffer);
+			close_socket(client_socket_fd);
+			continue;
+		}
+
+		free(buffer);
+		close_socket(client_socket_fd);
 	}
 
 	close_socket(server_socket_fd);
