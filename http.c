@@ -21,9 +21,7 @@ parse_http_request(char *request) {
 		} else if (strcmp(method_string, "HEAD") == 0) {
 			result->method = HEAD;
 		} else {
-			/* only GET and HEAD are supported */
-			free(result);
-			return NULL;
+			result->method = UNSUPPORTED;
 		}
 	}
 
