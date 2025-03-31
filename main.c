@@ -8,19 +8,22 @@
 #include "socket.h"
 #include "utils.h"
 
+#define DIRECTORY_MAX_LENGTH 1024
 #define DIRECTORY_INDEX_MAX_LENGTH 32
 #define USER_NAME_MAX_LENGTH 32
 #define GROUP_NAME_MAX_LENGTH 32
 
 void
 print_usage(char *program_name) {
-	print_error("usage: %s [-p port] [-i file] [-u user] [-g group]",
+	print_error("usage: %s -d directory [-p port] [-i file] [-u user] "
+	            "[-g group]",
 	            program_name);
 }
 
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
+	     directory[DIRECTORY_MAX_LENGTH],
 	     user_name[USER_NAME_MAX_LENGTH] = "nobody",
 	     group_name[GROUP_NAME_MAX_LENGTH] = "nogroup",
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
@@ -41,6 +44,19 @@ main(int argc, char *argv[]) {
 		}
 
 		switch (argument[1]) {
+		case 'd':
+			if (strlen(argv[i + 1]) >= DIRECTORY_MAX_LENGTH) {
+				print_error("error: directory length must be less than "
+				            "%u characters",
+				            DIRECTORY_MAX_LENGTH);
+			}
+			snprintf(directory,
+			         sizeof(directory),
+			         "%s",
+			         argv[i + 1]);
+			directory[sizeof(directory) - 1] = '\0';
+			i++;
+			break;
 		case 'p':
 			port = atoi(argv[i + 1]);
 			if (port < 1 || port > 65535) {
