@@ -2,6 +2,6 @@
 #define FILE_H
 
 int
-file_exists(char *path);
+is_file_readable(char *path);
 
 #endif

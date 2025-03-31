@@ -3,6 +3,6 @@
 #include <unistd.h>
 
 int
-file_exists(char *path) {
+is_file_readable(char *path) {
 	return (access(path, R_OK) == 0);
 }
