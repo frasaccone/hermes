@@ -32,12 +32,11 @@ main(int argc, char *argv[]) {
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
-		int value_exists = i + 1 < argc;
 
 		if (argument[0] != '-' ||
 		    argument[1] == '\0' ||
 		    argument[2] != '\0' ||
-		    !value_exists) {
+		    i + 1 >= argc /* argument value exists */) {
 			print_usage(program_name);
 		}
 
