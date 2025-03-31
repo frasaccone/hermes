@@ -182,7 +182,6 @@ main(int argc, char *argv[]) {
 		}
 
 		request = parse_http_request(request_buffer);
-
 		normalised_path = get_normalised_path(request->path);
 
 		free(request_buffer);
