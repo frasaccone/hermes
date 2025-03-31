@@ -15,8 +15,9 @@ close_socket(int socket_fd);
 int
 accept_client(int server_socket_fd);
 
-/* writes the client request to a buffer */
-void
+/* writes the client request to a buffer, returns -1 in case of an error and 0
+   otherwise */
+int
 read_client_request(int client_socket_fd,
                     char *buffer,
                     unsigned int buffer_size);

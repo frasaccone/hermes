@@ -52,13 +52,13 @@ accept_client(int server_socket_fd) {
 	return client_socket_fd;
 }
 
-void
+int
 read_client_request(int client_socket_fd,
                     char *buffer,
                     unsigned int buffer_size) {
 	if (buffer == NULL || buffer_size == 0) {
 		critical("error: invalid buffer provided in read_client_request");
-		return;
+		return -1;
 	}
 
 	memset(buffer, 0, buffer_size);
@@ -69,13 +69,15 @@ read_client_request(int client_socket_fd,
 	                              0);
 
 	if (bytes_received <= 0) {
-		return;
+		return -1;
 	}
 
 	if (bytes_received < buffer_size) {
 		buffer[bytes_received] = '\0';
-		return;
+		return -1;
 	}
 
 	buffer[buffer_size - 1] = '\0';
+
+	return 0;
 }
