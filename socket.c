@@ -15,7 +15,7 @@ create_socket(unsigned int port) {
 
 	if (socket_fd == -1) {
 		print_error("error: socket creation");
-		exit(1);
+		return -1;
 	}
 
 	address.sin_family = AF_INET;
@@ -24,13 +24,13 @@ create_socket(unsigned int port) {
 
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) == -1) {
 		print_error("error: bind socket to address");
-		exit(1);
+		return -1;
 	}
 
 	if (listen(socket_fd, 3) == -1) {
 		print_error("error: listen on socket");
 		close(socket_fd);
-		exit(1);
+		return -1;
 	}
 
 	return socket_fd;
