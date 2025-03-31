@@ -126,6 +126,7 @@ main(int argc, char *argv[]) {
 			                        buffer,
 			                        buffer_size) == -1) {
 				free(buffer);
+				close_socket(client_socket_fd);
 				continue;
 			}
 
