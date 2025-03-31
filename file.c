@@ -3,6 +3,6 @@
 #include <unistd.h>
 
 int
-file_exists(const char *path) {
+file_exists(char *path) {
 	return (access(path, R_OK) == 0);
 }

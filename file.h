@@ -2,6 +2,6 @@
 #define FILE_H
 
 int
-file_exists(const char *path);
+file_exists(char *path);
 
 #endif
