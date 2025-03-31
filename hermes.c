@@ -126,6 +126,7 @@ main(int argc, char *argv[]) {
 			                        buffer,
 			                        buffer_size) == -1) {
 				free(buffer);
+				continue;
 			}
 
 			free(buffer);
