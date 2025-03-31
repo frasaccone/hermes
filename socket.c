@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include "socket.h"
+#include "utils.h"
 
 int
 create_socket(unsigned int port) {
@@ -13,7 +14,7 @@ create_socket(unsigned int port) {
 	struct sockaddr_in address;
 
 	if (socket_fd == -1) {
-		printf("error: socket creation\n");
+		critical("error: socket creation");
 		exit(1);
 	}
 
@@ -22,12 +23,12 @@ create_socket(unsigned int port) {
 	address.sin_port = htons(port);
 
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) == -1) {
-		printf("error: bind socket to address\n");
+		critical("error: bind socket to address");
 		exit(1);
 	}
 
 	if (listen(socket_fd, 3) == -1) {
-		printf("error: listen on socket\n");
+		critical("error: listen on socket");
 		close(socket_fd);
 		exit(1);
 	}
@@ -51,7 +52,7 @@ read_client_request(int client_socket_fd,
                     char *buffer,
                     unsigned int buffer_size) {
 	if (buffer == NULL || buffer_size == 0) {
-		printf("error: invalid buffer provided in read_client_request");
+		critical("error: invalid buffer provided in read_client_request");
 		return;
 	}
 

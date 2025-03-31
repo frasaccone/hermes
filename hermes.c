@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "socket.h"
+#include "utils.h"
 
 #define DIRECTORY_INDEX_MAX_LENGTH 32
 #define USER_NAME_MAX_LENGTH 32
@@ -12,8 +13,8 @@
 
 void
 print_usage(char *program_name) {
-	printf("usage: %s [-p port] [-i file] [-u user] [-g group]\n",
-	       program_name);
+	critical("usage: %s [-p port] [-i file] [-u user] [-g group]",
+	         program_name);
 }
 
 int
@@ -33,18 +34,15 @@ main(int argc, char *argv[]) {
 
 		if (argument[0] != '-') {
 			print_usage(program_name);
-			return 1;
 		}
 
 		/* if argument[2] is a non-null character */
 		if (argument[2]) {
 			print_usage(program_name);
-			return 1;
 		}
 
 		if (!value_exists) {
 			print_usage(program_name);
-			return 1;
 		}
 
 		switch (argument[1]) {
@@ -54,10 +52,9 @@ main(int argc, char *argv[]) {
 			break;
 		case 'i':
 			if (strlen(argv[i + 1]) >= DIRECTORY_INDEX_MAX_LENGTH) {
-				printf("error: directory index must be less than "
-				       "%u characters\n",
-				       DIRECTORY_INDEX_MAX_LENGTH);
-				return 1;
+				critical("error: directory index must be less than "
+				         "%u characters",
+				         DIRECTORY_INDEX_MAX_LENGTH);
 			}
 			strncpy(directory_index, argv[i + 1], sizeof(directory_index) - 1);
 			directory_index[sizeof(directory_index) - 1] = '\0';
@@ -65,10 +62,9 @@ main(int argc, char *argv[]) {
 			break;
 		case 'u':
 			if (strlen(argv[i + 1]) >= USER_NAME_MAX_LENGTH) {
-				printf("error: the user name must be less than "
-				       "%u characters\n",
-				       USER_NAME_MAX_LENGTH);
-				return 1;
+				critical("error: the user name must be less than "
+				         "%u characters",
+				         USER_NAME_MAX_LENGTH);
 			}
 			strncpy(user_name, argv[i + 1], sizeof(user_name) - 1);
 			user_name[sizeof(user_name) - 1] = '\0';
@@ -76,10 +72,9 @@ main(int argc, char *argv[]) {
 			break;
 		case 'g':
 			if (strlen(argv[i + 1]) >= GROUP_NAME_MAX_LENGTH) {
-				printf("error: the group name must be less than "
-				       "%u characters\n",
-				       GROUP_NAME_MAX_LENGTH);
-				return 1;
+				critical("error: the group name must be less than "
+				         "%u characters",
+				         GROUP_NAME_MAX_LENGTH);
 			}
 			strncpy(group_name, argv[i + 1], sizeof(group_name) - 1);
 			group_name[sizeof(group_name) - 1] = '\0';
@@ -92,7 +87,7 @@ main(int argc, char *argv[]) {
 	}
 
 	if (port < 1 || port > 65535) {
-		printf("error: port must be between 1 and 65535.\n");
+		critical("error: port must be between 1 and 65535.");
 		return 1;
 	};
 
@@ -100,12 +95,12 @@ main(int argc, char *argv[]) {
 	group = getgrnam(group_name);
 
 	if (user == NULL) {
-		printf("error: user %s does not exist.\n", user_name);
+		critical("error: user %s does not exist.", user_name);
 		return 1;
 	}
 
 	if (group == NULL) {
-		printf("error: group %s does not exist.\n", group_name);
+		critical("error: group %s does not exist.", group_name);
 		return 1;
 	}
 
