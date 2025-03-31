@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "socket.h"
 #include "utils.h"
@@ -113,6 +114,16 @@ main(int argc, char *argv[]) {
 			free(buffer);
 			close_socket(client_socket_fd);
 			continue;
+		}
+
+		if (setgid(group->gr_gid) == -1) {
+			print_error("error: could not drop privileges to given group");
+			return 1;
+		}
+
+		if (setuid(user->pw_uid) == -1) {
+			print_error("error: could not drop privileges to given user");
+			return 1;
 		}
 
 		if (read_client_request(client_socket_fd,
