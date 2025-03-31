@@ -75,9 +75,9 @@ read_client_request(int client_socket_fd,
 	if (bytes_received < buffer_size) {
 		buffer[bytes_received] = '\0';
 		return -1;
+	} else {
+		buffer[buffer_size - 1] = '\0';
 	}
-
-	buffer[buffer_size - 1] = '\0';
 
 	return 0;
 }
