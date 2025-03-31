@@ -119,9 +119,10 @@ main(int argc, char *argv[]) {
 		/* child process */
 		break;
 	default:
-		/* parent process: wait for the child process to exit */
+		/* parent process */
 		int child_status;
 
+		/* wait for the child process to exit */
 		waitpid(pid, &child_status, 0);
 		break;
 	}
