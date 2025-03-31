@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "file.h"
 #include "http.h"
 #include "socket.h"
 #include "utils.h"
@@ -156,7 +157,8 @@ main(int argc, char *argv[]) {
 	while (1) {
 		int client_socket_fd,
 		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
-		char *buffer = malloc(buffer_size);
+		char *buffer = malloc(buffer_size),
+		     *normalised_path;
 		struct http_request *request;
 
 		client_socket_fd = accept_client(server_socket_fd);
@@ -176,6 +178,8 @@ main(int argc, char *argv[]) {
 		}
 
 		request = parse_http_request(buffer);
+
+		normalised_path = get_normalised_path(request->path);
 
 		free(buffer);
 		close_socket(client_socket_fd);
