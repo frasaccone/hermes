@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include "socket.h"
@@ -146,6 +147,21 @@ main(int argc, char *argv[]) {
 
 		if (setuid(user->pw_uid) == -1) {
 			print_error("error: could not drop privileges to given user");
+			return 1;
+		}
+
+		if (access(directory, R_OK) == -1) {
+			print_error("error: directory is nonexistent or inaccessible");
+			return 1;
+		}
+
+		if (chroot(directory) == -1) {
+			print_error("error: could not chroot to directory");
+			return 1;
+		}
+
+		if (chdir("/") == -1) {
+			print_error("error: could not change directory after chrooting");
 			return 1;
 		}
 
