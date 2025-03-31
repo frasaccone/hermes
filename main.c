@@ -156,32 +156,32 @@ main(int argc, char *argv[]) {
 
 	while (1) {
 		int client_socket_fd,
-		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
-		char *buffer = malloc(buffer_size),
+		    request_buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
+		char *request_buffer = malloc(request_buffer_size),
 		     *normalised_path;
 		struct http_request *request;
 
 		client_socket_fd = accept_client(server_socket_fd);
 
 		if (client_socket_fd == -1) {
-			free(buffer);
+			free(request_buffer);
 			close_socket(client_socket_fd);
 			continue;
 		}
 
 		if (read_client_request(client_socket_fd,
-		                        buffer,
-		                        buffer_size) == -1) {
-			free(buffer);
+		                        request_buffer,
+		                        request_buffer_size) == -1) {
+			free(request_buffer);
 			close_socket(client_socket_fd);
 			continue;
 		}
 
-		request = parse_http_request(buffer);
+		request = parse_http_request(request_buffer);
 
 		normalised_path = get_normalised_path(request->path);
 
-		free(buffer);
+		free(request_buffer);
 		close_socket(client_socket_fd);
 	}
 
