@@ -1,6 +1,8 @@
 #ifndef FILE_H
 #define FILE_H
 
+#include <stdlib.h>
+
 struct file_content {
 	char *content;
 	size_t length;
@@ -13,10 +15,12 @@ char *
 get_normalised_path(char *path);
 
 /*
- * Returns NULL in case of an error and a buffer containing the content of the
- * file at the given path otherwise..
+ * It returns the file_content instances of the file at given path.
+ *
+ * Returns 'struct file_content { NULL, 0 }' in case of an error and a 
+ * non-empty file_content instance otherwise.
  */
-char *
+struct file_content
 get_file_content(char *path);
 
 #endif

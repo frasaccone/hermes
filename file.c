@@ -41,15 +41,15 @@ get_normalised_path(char *path) {
 	return normalised;
 }
 
-char *
+struct file_content
 get_file_content(char *path) {
+	struct file_content result = { NULL, 0 };
 	FILE *file = fopen(path, "rb");
 	long file_size;
-	char *buffer;
 	size_t bytes_read;
 
 	if (file == NULL) {
-		return NULL;
+		return result;
 	}
 
 	/* Move the file pointer to the end of the file */
@@ -59,17 +59,20 @@ get_file_content(char *path) {
 	/* Come back at the start of the file */
 	fseek(file, 0, SEEK_SET);
 
-	buffer = malloc(file_size + 1);
+	result.content = malloc(file_size + 1);
 
-	if (!buffer) {
+	if (!result.content) {
 		fclose(file);
-		return NULL;
+		return result;
 	}
 
-	bytes_read = fread(buffer, 1, file_size, file);
-	buffer[bytes_read] = '\0';
+	bytes_read = fread(result.content, 1, file_size, file);
+
+	/* 'result' gets written here. Before this, it remained { NULL, 0 }. */
+	result.content[bytes_read] = '\0';
+	result.length = bytes_read;
 
 	fclose(file);
 
-	return buffer;
+	return result;
 }
