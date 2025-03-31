@@ -130,17 +130,9 @@ main(int argc, char *argv[]) {
 
 		break;
 	default:
-		/* parent process */
-
-		int child_status;
-
-		/* wait for the child process to exit */
-		waitpid(pid, &child_status, 0);
-
-		close_socket(server_socket_fd);
-
-		break;
 	}
+
+	close_socket(server_socket_fd);
 
 	return 0;
 }
