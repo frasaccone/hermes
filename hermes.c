@@ -109,9 +109,15 @@ main(int argc, char *argv[]) {
 		/* child process */
 
 		while (1) {
-			int client_socket_fd = accept_client(server_socket_fd),
+			int client_socket_fd,
 			    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
 			char *buffer = malloc(buffer_size);
+
+			client_socket_fd = accept_client(server_socket_fd);
+
+			if (client_socket_fd == -1) {
+				continue;
+			}
 
 			read_client_request(client_socket_fd, buffer, buffer_size);
 
