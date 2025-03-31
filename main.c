@@ -127,6 +127,31 @@ main(int argc, char *argv[]) {
 
 	server_socket_fd = create_socket(port);
 
+	if (setgid(group->gr_gid) == -1) {
+		print_error("error: could not drop privileges to given group");
+		return 1;
+	}
+
+	if (setuid(user->pw_uid) == -1) {
+		print_error("error: could not drop privileges to given user");
+		return 1;
+	}
+
+	if (access(directory, R_OK) == -1) {
+		print_error("error: directory is nonexistent or inaccessible");
+		return 1;
+	}
+
+	if (chroot(directory) == -1) {
+		print_error("error: could not chroot to directory");
+		return 1;
+	}
+
+	if (chdir("/") == -1) {
+		print_error("error: could not change directory after chrooting");
+		return 1;
+	}
+
 	while (1) {
 		int client_socket_fd,
 		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
@@ -138,31 +163,6 @@ main(int argc, char *argv[]) {
 			free(buffer);
 			close_socket(client_socket_fd);
 			continue;
-		}
-
-		if (setgid(group->gr_gid) == -1) {
-			print_error("error: could not drop privileges to given group");
-			return 1;
-		}
-
-		if (setuid(user->pw_uid) == -1) {
-			print_error("error: could not drop privileges to given user");
-			return 1;
-		}
-
-		if (access(directory, R_OK) == -1) {
-			print_error("error: directory is nonexistent or inaccessible");
-			return 1;
-		}
-
-		if (chroot(directory) == -1) {
-			print_error("error: could not chroot to directory");
-			return 1;
-		}
-
-		if (chdir("/") == -1) {
-			print_error("error: could not change directory after chrooting");
-			return 1;
 		}
 
 		if (read_client_request(client_socket_fd,
