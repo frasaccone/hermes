@@ -4,6 +4,8 @@
 /*
  * Creates a socket and a local address at the given port, binds them,
  * listens for connections and returns the socket file descriptor.
+ *
+ * Returns -1 in case of an error and the socket file descriptor otherwise.
  */
 int
 create_socket(unsigned int port);
