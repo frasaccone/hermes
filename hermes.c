@@ -29,7 +29,6 @@ main(int argc, char *argv[]) {
 	    server_socket_fd;
 	struct passwd *user;
 	struct group *group;
-	pid_t pid;
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
@@ -109,9 +108,7 @@ main(int argc, char *argv[]) {
 
 	server_socket_fd = create_socket(port);
 
-	pid = fork();
-
-	switch (pid) {
+	switch (fork()) {
 	case -1:
 		critical("error: could not fork process.");
 		break;
