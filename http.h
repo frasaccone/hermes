@@ -84,4 +84,12 @@ struct http_response {
 struct http_request *
 parse_http_request(char *request);
 
+/*
+ * Writes a raw HTTP response to buffer, given a http_response.
+ */
+void
+compose_http_response(struct http_response *response,
+                      char *buffer,
+                      unsigned int buffer_size);
+
 #endif

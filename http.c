@@ -1,5 +1,6 @@
 #include "http.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,4 +33,20 @@ parse_http_request(char *request) {
 	}
 
 	return result;
+}
+
+void
+compose_http_response(struct http_response *response,
+                      char *buffer,
+                      unsigned int buffer_size) {
+	snprintf(buffer, buffer_size, "HTTP/1.1 %u %s\r\n"
+	                              "Content-Type: %s; charset=UTF-8\r\n"
+	                              "Content-Length: %u\r\n"
+	                              "\r\n"
+	                              "%s",
+	         status_map[response->status].code,
+	         status_map[response->status].message,
+	         response->content_type,
+	         response->body_length,
+	         response->body);
 }
