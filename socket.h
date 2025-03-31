@@ -16,6 +16,13 @@ create_socket(unsigned int port);
 void
 close_socket(int socket_fd);
 
+/*
+ * Returns -1 in case of an error and the length of a socket (actually a
+ * generic file descriptor) otherwise.
+ */
+int
+get_socket_size(int socket_fd);
+
 /* 
  * Accepts a connection from the server socket and returns the client socket
  * file descriptor.

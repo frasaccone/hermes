@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
@@ -39,6 +40,17 @@ create_socket(unsigned int port) {
 void
 close_socket(int socket_fd) {
 	close(socket_fd);
+}
+
+int
+get_socket_size(int socket_fd) {
+	int result;
+
+	if (ioctl(socket_fd, FIONREAD, &result) == -1) {
+		return -1;
+	};
+
+	return result;
 }
 
 int
