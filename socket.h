@@ -42,4 +42,12 @@ read_client_request(int client_socket_fd,
                     char *buffer,
                     unsigned int buffer_size);
 
+/*
+ * Writes data to a socket.
+ *
+ * Returns -1 in case of an error and 0 otherwise.
+ */
+int
+send_to_socket(int socket_fd, char *data);
+
 #endif

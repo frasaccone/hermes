@@ -94,3 +94,12 @@ read_client_request(int client_socket_fd,
 
 	return 0;
 }
+
+int
+send_to_socket(int socket_fd, char *data) {
+	if (send(socket_fd, data, strlen(data), 0) == -1) {
+		return -1;
+	}
+
+	return 0;
+}
