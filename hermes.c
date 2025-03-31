@@ -42,8 +42,7 @@ main(int argc, char *argv[]) {
 			print_usage(program_name);
 		}
 
-		/* if argument[2] is a non-null character */
-		if (argument[2]) {
+		if (argument[2] != '\0') {
 			print_usage(program_name);
 		}
 
