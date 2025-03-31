@@ -44,6 +44,10 @@ main(int argc, char *argv[]) {
 		switch (argument[1]) {
 		case 'p':
 			port = atoi(argv[i + 1]);
+			if (port < 1 || port > 65535) {
+				print_error("error: port must be between 1 and 65535.");
+				return 1;
+			};
 			i++;
 			break;
 		case 'i':
@@ -81,11 +85,6 @@ main(int argc, char *argv[]) {
 			return 1;
 		}
 	}
-
-	if (port < 1 || port > 65535) {
-		print_error("error: port must be between 1 and 65535.");
-		return 1;
-	};
 
 	user = getpwnam(user_name);
 	group = getgrnam(group_name);
