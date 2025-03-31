@@ -28,8 +28,7 @@ accept_client(int server_socket_fd);
 /*
  * Writes the client request to a buffer.
  *
- * Returns -1 in case of an error and 0
- * otherwise.
+ * Returns -1 in case of an error and 0 otherwise.
  */
 int
 read_client_request(int client_socket_fd,
