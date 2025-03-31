@@ -1,3 +1,5 @@
+#include <grp.h>
+#include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,6 +24,8 @@ main(int argc, char *argv[]) {
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
+	struct passwd *user;
+	struct group *group;
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
@@ -91,6 +95,19 @@ main(int argc, char *argv[]) {
 		printf("error: port must be between 1 and 65535.\n");
 		return 1;
 	};
+
+	user = getpwnam(user_name);
+	group = getgrnam(group_name);
+
+	if (user == NULL) {
+		printf("error: user %s does not exist.\n", user_name);
+		return 1;
+	}
+
+	if (group == NULL) {
+		printf("error: group %s does not exist.\n", group_name);
+		return 1;
+	}
 
 	server_socket_fd = create_socket(port);
 
