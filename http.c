@@ -47,8 +47,8 @@ get_length_of_integer(unsigned int integer) {
 	return result;
 }
 
-void
-compose_http_response(struct http_response response, char *buffer) {
+char *
+compose_http_response(struct http_response response) {
 	size_t size;
 	unsigned int status_code = status_map[response.status].code;
 	const char *template = "HTTP/1.1 %u %s\r\n"
@@ -59,6 +59,7 @@ compose_http_response(struct http_response response, char *buffer) {
 	           *status_message = status_map[response.status].message,
 	           *content_type = response.content_type,
 	           *body = response.body;
+	char *buffer;
 
 	/*
 	 * This is actually a bit inelegant: it adds the length of 'template'
@@ -74,10 +75,16 @@ compose_http_response(struct http_response response, char *buffer) {
 	       + strlen(body)
 	       - 2 * 5;
 
+	buffer = malloc(size);
+
 	snprintf(buffer, size, template,
 	         status_code,
 	         status_message,
 	         content_type,
 	         strlen(body),
 	         body);
+
+	buffer[size] = '\0';
+
+	return buffer;
 }
