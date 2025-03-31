@@ -6,6 +6,10 @@
 int
 create_socket(unsigned int port);
 
+/* closes a socket */
+void
+close_socket(int socket_fd);
+
 /* accepts a connection from the server socket and returns the client socket
    file descriptor */
 int

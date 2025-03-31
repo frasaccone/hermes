@@ -36,6 +36,11 @@ create_socket(unsigned int port) {
 	return socket_fd;
 }
 
+void
+close_socket(int socket_fd) {
+	close(socket_fd);
+}
+
 int
 accept_client(int server_socket_fd) {
 	struct sockaddr_in client_address;
