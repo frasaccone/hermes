@@ -34,19 +34,10 @@ main(int argc, char *argv[]) {
 		char *argument = argv[i];
 		int value_exists = i + 1 < argc;
 
-		if (argument[0] != '-') {
-			print_usage(program_name);
-		}
-
-		if (argument[1] == '\0') {
-			print_usage(program_name);
-		}
-
-		if (argument[2] != '\0') {
-			print_usage(program_name);
-		}
-
-		if (!value_exists) {
+		if (argument[0] != '-' ||
+		    argument[1] == '\0' ||
+		    argument[2] != '\0' ||
+		    !value_exists) {
 			print_usage(program_name);
 		}
 
