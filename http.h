@@ -78,7 +78,6 @@ struct http_response {
 	enum http_response_status status;
 	const char *content_type;
 	char *body;
-	unsigned int body_length;
 };
 
 struct http_request *

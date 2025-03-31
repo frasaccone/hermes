@@ -50,8 +50,7 @@ get_length_of_integer(unsigned int integer) {
 void
 compose_http_response(struct http_response response, char *buffer) {
 	size_t size;
-	unsigned int status_code = status_map[response.status].code,
-	             body_length = response.body_length;
+	unsigned int status_code = status_map[response.status].code;
 	const char *template = "HTTP/1.1 %u %s\r\n"
 	                       "Content-Type: %s; charset=UTF-8\r\n"
 	                       "Content-Length: %u\r\n"
@@ -71,7 +70,7 @@ compose_http_response(struct http_response response, char *buffer) {
 	       + get_length_of_integer(status_code)
 	       + strlen(status_message)
 	       + strlen(content_type)
-	       + get_length_of_integer(body_length)
+	       + get_length_of_integer(strlen(body))
 	       + strlen(body)
 	       - 2 * 5;
 
@@ -79,6 +78,6 @@ compose_http_response(struct http_response response, char *buffer) {
 	         status_code,
 	         status_message,
 	         content_type,
-	         body_length,
+	         strlen(body),
 	         body);
 }
