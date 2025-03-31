@@ -63,17 +63,17 @@ compose_http_response(struct http_response response) {
 
 	/*
 	 * This is actually a bit inelegant: it adds the length of 'template'
-	 * with the length of each component of http_response; it then removes
-	 * the number of characters occupied by template patterns of the form
-	 * '%x', that is, 2 times the number of template patterns used.
+	 * with the length of each component of http_response; it will result
+	 * in something bigger than the actual size of the response due to 
+	 * the template patterns in %, but that is just a few bytes and nobody
+	 * really minds it.
 	 */
 	size = strlen(template)
 	       + get_length_of_integer(status_code)
 	       + strlen(status_message)
 	       + strlen(content_type)
 	       + get_length_of_integer(strlen(body))
-	       + strlen(body)
-	       - 2 * 5;
+	       + strlen(body);
 
 	buffer = malloc(size);
 
