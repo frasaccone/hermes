@@ -28,7 +28,8 @@ main(int argc, char *argv[]) {
 	     group_name[GROUP_NAME_MAX_LENGTH] = "nogroup",
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
-	    server_socket_fd;
+	    server_socket_fd,
+	    is_directory_set = 0;
 	struct passwd *user;
 	struct group *group;
 
@@ -55,6 +56,7 @@ main(int argc, char *argv[]) {
 			         "%s",
 			         argv[i + 1]);
 			directory[sizeof(directory) - 1] = '\0';
+			is_directory_set = 1;
 			i++;
 			break;
 		case 'p':
@@ -102,6 +104,11 @@ main(int argc, char *argv[]) {
 			print_usage(program_name);
 			return 1;
 		}
+	}
+
+	if (!is_directory_set) {
+		print_usage(program_name);
+		return 1;
 	}
 
 	user = getpwnam(user_name);
