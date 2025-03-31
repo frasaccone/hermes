@@ -1,6 +1,11 @@
 #ifndef FILE_H
 #define FILE_H
 
+struct file_content {
+	char *content;
+	size_t length;
+};
+
 int
 is_file_readable(char *path);
 
