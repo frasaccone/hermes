@@ -55,7 +55,7 @@ compose_http_response(struct http_response response) {
 	                       "Content-Type: %s; charset=UTF-8\r\n"
 	                       "Content-Length: %u\r\n"
 	                       "\r\n"
-	                       "%s",
+	                       "%s\n",
 	           *status_message = status_map[response.status].message,
 	           *content_type = response.content_type,
 	           *body = response.body;
