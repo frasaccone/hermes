@@ -81,6 +81,9 @@ struct http_response {
 	char *body;
 };
 
+/*
+ * Returns the http_request from a raw client request string.
+ */
 struct http_request *
 parse_http_request(char *request);
 
