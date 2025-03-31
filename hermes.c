@@ -49,7 +49,7 @@ main(int argc, char *argv[]) {
 		case 'i':
 			if (strlen(argv[i + 1]) >= DIRECTORY_INDEX_MAX_LENGTH) {
 				printf("error: directory index must be less than "
-				       "%u characters",
+				       "%u characters\n",
 				       DIRECTORY_INDEX_MAX_LENGTH);
 				return 1;
 			}
@@ -60,7 +60,7 @@ main(int argc, char *argv[]) {
 		case 'u':
 			if (strlen(argv[i + 1]) >= USER_MAX_LENGTH) {
 				printf("error: the user length must be less than "
-				       "%u characters",
+				       "%u characters\n",
 				       USER_MAX_LENGTH);
 				return 1;
 			}
@@ -75,7 +75,7 @@ main(int argc, char *argv[]) {
 	}
 
 	if (port < 1 || port > 65535) {
-		printf("error: port must be between 1 and 65535.");
+		printf("error: port must be between 1 and 65535.\n");
 		return 1;
 	};
 
