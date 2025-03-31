@@ -11,6 +11,8 @@
 #include "socket.h"
 #include "utils.h"
 
+#define REQUEST_BUFFER_MAX_LENGTH 104857600 * sizeof(char) /* 100 MiB */
+
 #define DIRECTORY_MAX_LENGTH 1024
 #define DIRECTORY_INDEX_MAX_LENGTH 32
 #define USER_NAME_MAX_LENGTH 32
@@ -155,9 +157,8 @@ main(int argc, char *argv[]) {
 	}
 
 	while (1) {
-		int client_socket_fd,
-		    request_buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
-		char *request_buffer = malloc(request_buffer_size),
+		int client_socket_fd;
+		char *request_buffer = malloc(REQUEST_BUFFER_MAX_LENGTH),
 		     *normalised_path;
 		struct http_request *request;
 
@@ -171,7 +172,7 @@ main(int argc, char *argv[]) {
 
 		if (read_client_request(client_socket_fd,
 		                        request_buffer,
-		                        request_buffer_size) == -1) {
+		                        REQUEST_BUFFER_MAX_LENGTH) == -1) {
 			free(request_buffer);
 			close_socket(client_socket_fd);
 			continue;
