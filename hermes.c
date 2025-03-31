@@ -5,8 +5,8 @@
 #include "socket.h"
 
 #define DIRECTORY_INDEX_MAX_LENGTH 32
-#define USER_MAX_LENGTH 32
-#define GROUP_MAX_LENGTH 32
+#define USER_NAME_MAX_LENGTH 32
+#define GROUP_NAME_MAX_LENGTH 32
 
 void
 print_usage(char *program_name) {
@@ -17,8 +17,8 @@ print_usage(char *program_name) {
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
-	     user[USER_MAX_LENGTH] = "nobody",
-	     group[GROUP_MAX_LENGTH] = "nogroup",
+	     user_name[USER_NAME_MAX_LENGTH] = "nobody",
+	     group_name[GROUP_NAME_MAX_LENGTH] = "nogroup",
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
@@ -60,25 +60,25 @@ main(int argc, char *argv[]) {
 			i++;
 			break;
 		case 'u':
-			if (strlen(argv[i + 1]) >= USER_MAX_LENGTH) {
-				printf("error: the user length must be less than "
+			if (strlen(argv[i + 1]) >= USER_NAME_MAX_LENGTH) {
+				printf("error: the user name must be less than "
 				       "%u characters\n",
-				       USER_MAX_LENGTH);
+				       USER_NAME_MAX_LENGTH);
 				return 1;
 			}
-			strncpy(user, argv[i + 1], sizeof(user) - 1);
-			user[sizeof(user) - 1] = '\0';
+			strncpy(user_name, argv[i + 1], sizeof(user_name) - 1);
+			user_name[sizeof(user_name) - 1] = '\0';
 			i++;
 			break;
 		case 'g':
-			if (strlen(argv[i + 1]) >= GROUP_MAX_LENGTH) {
-				printf("error: the group length must be less than "
+			if (strlen(argv[i + 1]) >= GROUP_NAME_MAX_LENGTH) {
+				printf("error: the group name must be less than "
 				       "%u characters\n",
-				       GROUP_MAX_LENGTH);
+				       GROUP_NAME_MAX_LENGTH);
 				return 1;
 			}
-			strncpy(group, argv[i + 1], sizeof(group) - 1);
-			group[sizeof(group) - 1] = '\0';
+			strncpy(group_name, argv[i + 1], sizeof(group_name) - 1);
+			group_name[sizeof(group_name) - 1] = '\0';
 			i++;
 			break;
 		default:
