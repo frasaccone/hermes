@@ -124,6 +124,8 @@ main(int argc, char *argv[]) {
 			char *buffer = malloc(buffer_size);
 
 			read_client_request(client_socket_fd, buffer, buffer_size);
+
+			close_socket(client_socket_fd);
 		}
 
 		break;
