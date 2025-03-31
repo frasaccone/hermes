@@ -157,7 +157,8 @@ main(int argc, char *argv[]) {
 	}
 
 	while (1) {
-		int client_socket_fd;
+		int client_socket_fd,
+		    client_socket_size;
 		char *request_buffer = malloc(REQUEST_BUFFER_MAX_LENGTH),
 		     *normalised_path;
 		struct http_request *request;
@@ -169,6 +170,8 @@ main(int argc, char *argv[]) {
 			close_socket(client_socket_fd);
 			continue;
 		}
+
+		client_socket_size = get_socket_size(client_socket_fd);
 
 		if (read_client_request(client_socket_fd,
 		                        request_buffer,
