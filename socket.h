@@ -19,6 +19,8 @@ close_socket(int socket_fd);
 /* 
  * Accepts a connection from the server socket and returns the client socket
  * file descriptor.
+ *
+ * Returns -1 in case of an error and the socket file descriptor otherwise.
  */
 int
 accept_client(int server_socket_fd);
