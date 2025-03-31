@@ -5,7 +5,7 @@
 #include "utils.h"
 
 void
-critical(const char *message, ...) {
+print_error(const char *message, ...) {
 	va_list arguments;
 
 	va_start(arguments, message);
@@ -13,6 +13,4 @@ critical(const char *message, ...) {
 	va_end(arguments);
 
 	fprintf(stderr, "\n");
-
-	exit(1);
 }

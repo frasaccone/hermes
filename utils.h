@@ -2,6 +2,6 @@
 #define UTILS_H
 
 void
-critical(const char *message, ...);
+print_error(const char *message, ...);
 
 #endif
