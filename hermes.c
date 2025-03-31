@@ -56,7 +56,10 @@ main(int argc, char *argv[]) {
 				            "%u characters",
 				            DIRECTORY_INDEX_MAX_LENGTH);
 			}
-			strncpy(directory_index, argv[i + 1], sizeof(directory_index) - 1);
+			snprintf(directory_index,
+			         sizeof(directory_index),
+			         "%s",
+			         argv[i + 1]);
 			directory_index[sizeof(directory_index) - 1] = '\0';
 			i++;
 			break;
