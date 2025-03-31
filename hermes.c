@@ -14,7 +14,7 @@ print_usage(char *program_name) {
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
-	     directory_index[32] = "index.html";
+	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
 
