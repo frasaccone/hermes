@@ -36,7 +36,7 @@ parse_http_request(char *request) {
 }
 
 void
-compose_http_response(struct http_response *response,
+compose_http_response(struct http_response response,
                       char *buffer,
                       unsigned int buffer_size) {
 	snprintf(buffer, buffer_size, "HTTP/1.1 %u %s\r\n"
@@ -44,9 +44,9 @@ compose_http_response(struct http_response *response,
 	                              "Content-Length: %u\r\n"
 	                              "\r\n"
 	                              "%s",
-	         status_map[response->status].code,
-	         status_map[response->status].message,
-	         response->content_type,
-	         response->body_length,
-	         response->body);
+	         status_map[response.status].code,
+	         status_map[response.status].message,
+	         response.content_type,
+	         response.body_length,
+	         response.body);
 }
