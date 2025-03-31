@@ -1,7 +1,8 @@
 #include "file.h"
 
+#include <unistd.h>
+
 int
 file_exists(const char *path) {
-	struct stat buffer;
-	return (stat(path, &buffer) == 0);
+	return (access(path, R_OK) == 0);
 }
