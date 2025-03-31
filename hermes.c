@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #include "socket.h"
 #include "utils.h"
@@ -27,6 +29,7 @@ main(int argc, char *argv[]) {
 	    server_socket_fd;
 	struct passwd *user;
 	struct group *group;
+	pid_t pid;
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
@@ -105,6 +108,23 @@ main(int argc, char *argv[]) {
 	}
 
 	server_socket_fd = create_socket(port);
+
+	pid = fork();
+
+	switch (pid) {
+	case -1:
+		critical("error: could not fork process.");
+		break;
+	case 0:
+		/* child process */
+		break;
+	default:
+		/* parent process: wait for the child process to exit */
+		int child_status;
+
+		waitpid(pid, &child_status, 0);
+		break;
+	}
 
 	while (1) {
 		int client_socket_fd = accept_client(server_socket_fd),
