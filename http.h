@@ -31,6 +31,7 @@ static const struct {
 enum http_request_method {
 	GET,
 	HEAD,
+	UNSUPPORTED,
 };
 
 enum http_response_status {
