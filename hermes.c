@@ -125,6 +125,9 @@ main(int argc, char *argv[]) {
 
 		/* wait for the child process to exit */
 		waitpid(pid, &child_status, 0);
+
+		close_socket(server_socket_fd);
+
 		break;
 	}
 
