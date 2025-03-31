@@ -35,18 +35,50 @@ parse_http_request(char *request) {
 	return result;
 }
 
+unsigned int
+get_length_of_integer(unsigned int integer) {
+	unsigned int result = 0;
+
+	while (integer > 1) {
+		integer /= 10;
+		result++;
+	}
+
+	return result;
+}
+
 void
-compose_http_response(struct http_response response,
-                      char *buffer,
-                      unsigned int buffer_size) {
-	snprintf(buffer, buffer_size, "HTTP/1.1 %u %s\r\n"
-	                              "Content-Type: %s; charset=UTF-8\r\n"
-	                              "Content-Length: %u\r\n"
-	                              "\r\n"
-	                              "%s",
-	         status_map[response.status].code,
-	         status_map[response.status].message,
-	         response.content_type,
-	         response.body_length,
-	         response.body);
+compose_http_response(struct http_response response, char *buffer) {
+	size_t size;
+	unsigned int status_code = status_map[response.status].code,
+	             body_length = response.body_length;
+	const char *template = "HTTP/1.1 %u %s\r\n"
+	                       "Content-Type: %s; charset=UTF-8\r\n"
+	                       "Content-Length: %u\r\n"
+	                       "\r\n"
+	                       "%s",
+	           *status_message = status_map[response.status].message,
+	           *content_type = response.content_type,
+	           *body = response.body;
+
+	/*
+	 * This is actually a bit inelegant: it adds the length of 'template'
+	 * with the length of each component of http_response; it then removes
+	 * the number of characters occupied by template patterns of the form
+	 * '%x', that is, 2 times the number of template patterns used.
+	 */
+	size = strlen(template)
+	       + get_length_of_integer(status_code)
+	       + strlen(status_message)
+	       + strlen(content_type)
+	       + get_length_of_integer(body_length)
+	       + strlen(body)
+	       - 2 * 5;
+
+	snprintf(buffer, size, template,
+	         status_code,
+	         status_message,
+	         content_type,
+	         body_length,
+	         body);
 }
