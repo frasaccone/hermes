@@ -48,14 +48,12 @@ get_length_of_integer(unsigned int integer) {
 }
 
 char *
-compose_http_response(struct http_response response) {
+compose_http_response_head(struct http_response response) {
 	size_t size;
 	unsigned int status_code = status_map[response.status].code;
 	const char *template = "HTTP/1.1 %u %s\r\n"
 	                       "Content-Type: %s; charset=UTF-8\r\n"
-	                       "Content-Length: %u\r\n"
-	                       "\r\n"
-	                       "%s\n",
+	                       "Content-Length: %u\r\n",
 	           *status_message = status_map[response.status].message,
 	           *content_type = response.content_type,
 	           *body = response.body;
@@ -72,8 +70,7 @@ compose_http_response(struct http_response response) {
 	       + get_length_of_integer(status_code)
 	       + strlen(status_message)
 	       + strlen(content_type)
-	       + get_length_of_integer(strlen(body))
-	       + strlen(body);
+	       + get_length_of_integer(strlen(body));
 
 	buffer = malloc(size);
 
@@ -81,7 +78,35 @@ compose_http_response(struct http_response response) {
 	         status_code,
 	         status_message,
 	         content_type,
-	         strlen(body),
+	         strlen(body));
+
+	buffer[size] = '\0';
+
+	return buffer;
+}
+
+char *
+compose_http_response_full(struct http_response response) {
+	size_t size;
+	const char *template = "%s"
+	                       "\r\n"
+	                       "%s\n",
+	           *head = compose_http_response_head(response),
+	           *body = response.body;
+	char *buffer;
+
+	/*
+	 * Read the comment inside the compose_http_response_head function in this
+	 * same file.
+	 */
+	size = strlen(template)
+	       + strlen(head)
+	       + strlen(body);
+
+	buffer = malloc(size);
+
+	snprintf(buffer, size, template,
+	         head,
 	         body);
 
 	buffer[size] = '\0';

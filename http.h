@@ -84,9 +84,16 @@ struct http_request *
 parse_http_request(char *request);
 
 /*
- * Returns the raw HTTP response from a given a http_response.
+ * Returns the head of the raw HTTP response from a given a http_response.
  */
 char *
-compose_http_response(struct http_response response);
+compose_http_response_head(struct http_response response);
+
+/*
+ * Returns the raw HTTP response, composed of both head and body, from a
+ * given a http_response.
+ */
+char *
+compose_http_response_full(struct http_response response);
 
 #endif
