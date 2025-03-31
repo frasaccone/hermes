@@ -117,6 +117,15 @@ main(int argc, char *argv[]) {
 		break;
 	case 0:
 		/* child process */
+
+		while (1) {
+			int client_socket_fd = accept_client(server_socket_fd),
+			    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
+			char *buffer = malloc(buffer_size);
+
+			read_client_request(client_socket_fd, buffer, buffer_size);
+		}
+
 		break;
 	default:
 		/* parent process */
@@ -129,14 +138,6 @@ main(int argc, char *argv[]) {
 		close_socket(server_socket_fd);
 
 		break;
-	}
-
-	while (1) {
-		int client_socket_fd = accept_client(server_socket_fd),
-		    buffer_size = 104857600 * sizeof(char); /* i.e. 100 MiB */
-		char *buffer = malloc(buffer_size);
-
-		read_client_request(client_socket_fd, buffer, buffer_size);
 	}
 
 	return 0;
