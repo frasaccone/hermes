@@ -36,7 +36,7 @@ main(int argc, char *argv[]) {
 		if (argument[0] != '-' ||
 		    argument[1] == '\0' ||
 		    argument[2] != '\0' ||
-		    i + 1 >= argc /* argument value exists */) {
+		    i + 1 >= argc /* Argument value exists */) {
 			print_usage(program_name);
 		}
 
@@ -106,7 +106,7 @@ main(int argc, char *argv[]) {
 		print_error("error: could not fork process.");
 		break;
 	case 0:
-		/* child process */
+		/* Child process */
 
 		while (1) {
 			int client_socket_fd,
