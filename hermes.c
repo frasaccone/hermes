@@ -120,6 +120,7 @@ main(int argc, char *argv[]) {
 		break;
 	default:
 		/* parent process */
+
 		int child_status;
 
 		/* wait for the child process to exit */
