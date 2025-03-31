@@ -116,11 +116,18 @@ main(int argc, char *argv[]) {
 			client_socket_fd = accept_client(server_socket_fd);
 
 			if (client_socket_fd == -1) {
+				free(buffer);
+				close_socket(client_socket_fd);
 				continue;
 			}
 
-			read_client_request(client_socket_fd, buffer, buffer_size);
+			if (read_client_request(client_socket_fd,
+			                        buffer,
+			                        buffer_size) == -1) {
+				free(buffer);
+			}
 
+			free(buffer);
 			close_socket(client_socket_fd);
 		}
 
