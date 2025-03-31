@@ -56,6 +56,8 @@ int
 read_client_request(int client_socket_fd,
                     char *buffer,
                     unsigned int buffer_size) {
+	ssize_t bytes_received;
+
 	if (buffer == NULL || buffer_size == 0) {
 		print_error("error: invalid buffer provided in read_client_request");
 		return -1;
@@ -63,10 +65,10 @@ read_client_request(int client_socket_fd,
 
 	memset(buffer, 0, buffer_size);
 
-	ssize_t bytes_received = recv(client_socket_fd,
-	                              buffer,
-	                              buffer_size - 1,
-	                              0);
+	bytes_received = recv(client_socket_fd,
+	                      buffer,
+	                      buffer_size - 1,
+	                      0);
 
 	if (bytes_received <= 0) {
 		return -1;
