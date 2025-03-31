@@ -50,8 +50,8 @@ main(int argc, char *argv[]) {
 				       DIRECTORY_INDEX_MAX_LENGTH);
 				return 1;
 			}
-			strncpy(directory_index, argv[i + 1], sizeof(directory_index) -1);
-			directory_index[sizeof(directory_index) -1] = '\0';
+			strncpy(directory_index, argv[i + 1], sizeof(directory_index) - 1);
+			directory_index[sizeof(directory_index) - 1] = '\0';
 			i++;
 			break;
 		default:
