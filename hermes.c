@@ -6,10 +6,11 @@
 
 #define DIRECTORY_INDEX_MAX_LENGTH 32
 #define USER_MAX_LENGTH 32
+#define GROUP_MAX_LENGTH 32
 
 void
 print_usage(char *program_name) {
-	printf("usage: %s [-p port] [-i file] [-u user]\n",
+	printf("usage: %s [-p port] [-i file] [-u user] [-g group]\n",
 	       program_name);
 }
 
@@ -17,6 +18,7 @@ int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
 	     user[USER_MAX_LENGTH] = "nobody",
+	     group[GROUP_MAX_LENGTH] = "nogroup",
 	     directory_index[DIRECTORY_INDEX_MAX_LENGTH] = "index.html";
 	int i, port = 80,
 	    server_socket_fd;
@@ -66,6 +68,17 @@ main(int argc, char *argv[]) {
 			}
 			strncpy(user, argv[i + 1], sizeof(user) - 1);
 			user[sizeof(user) - 1] = '\0';
+			i++;
+			break;
+		case 'g':
+			if (strlen(argv[i + 1]) >= GROUP_MAX_LENGTH) {
+				printf("error: the group length must be less than "
+				       "%u characters\n",
+				       GROUP_MAX_LENGTH);
+				return 1;
+			}
+			strncpy(group, argv[i + 1], sizeof(group) - 1);
+			group[sizeof(group) - 1] = '\0';
 			i++;
 			break;
 		default:
