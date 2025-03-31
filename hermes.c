@@ -38,6 +38,7 @@ main(int argc, char *argv[]) {
 		    argument[2] != '\0' ||
 		    i + 1 >= argc /* Argument value exists */) {
 			print_usage(program_name);
+			return 1;
 		}
 
 		switch (argument[1]) {
