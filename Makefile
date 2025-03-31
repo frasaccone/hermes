@@ -2,7 +2,7 @@
 
 include config.mk
 
-SOURCES = main.c socket.c http.c utils.c
+SOURCES = main.c socket.c http.c utils.c file.c
 
 hermes: $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $^
