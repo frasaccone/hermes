@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 char *
@@ -23,7 +24,21 @@ get_mime_type_from_extension(char *extension) {
 
 int
 is_file_readable(char *path) {
-	return (access(path, R_OK) == 0);
+	struct stat file_stat;
+
+	if (stat(path, &file_stat) != 0) {
+		return 0;
+	}
+
+	if (!S_ISREG(file_stat.st_mode)) {
+		return 0;
+	}
+
+	if (access(path, R_OK) != 0) {
+		return 0;
+	};
+
+	return 1;
 }
 
 char *
