@@ -62,6 +62,18 @@ get_file_name(char *path) {
 	return character_after_last_slash;
 }
 
+char *
+get_file_extension(char *path) {
+	char *file_name = get_file_name(path),
+	     *last_dot = strrchr(file_name, '.');
+
+	if (last_dot == NULL) {
+		return "";
+	}
+
+	return last_dot + sizeof(char);
+}
+
 struct file_content
 get_file_content(char *path) {
 	struct file_content result = { NULL, 0 };

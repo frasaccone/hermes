@@ -42,6 +42,9 @@ get_normalised_path(char *path);
 char *
 get_file_name(char *path);
 
+char *
+get_file_extension(char *path);
+
 /*
  * It returns the file_content instances of the file at given path.
  *
