@@ -86,15 +86,15 @@ main(int argc, char *argv[]) {
 			break;
 		case 'p':
 			port = atoi(argv[i + 1]);
-			if (port < 1 || port > 65535) {
-				print_error("error: port must be between 1 "
+			if (port < 1 || port > 65535) { print_error("error: port must be between 1 "
 				            "and 65535.");
 				return 1;
 			};
 			i++;
 			break;
 		case 'i':
-			if (strlen(argv[i + 1]) >= DIRECTORY_INDEX_MAX_LENGTH) {
+			if (strlen(argv[i + 1])
+			    >= DIRECTORY_INDEX_MAX_LENGTH) {
 				print_error("error: directory index must be "
 				            "less than %u characters",
 				            DIRECTORY_INDEX_MAX_LENGTH);
@@ -112,7 +112,9 @@ main(int argc, char *argv[]) {
 				            "less than %u characters",
 				            USER_NAME_MAX_LENGTH);
 			}
-			strncpy(user_name, argv[i + 1], sizeof(user_name) - 1);
+			strncpy(user_name,
+			        argv[i + 1],
+			        sizeof(user_name) - 1);
 			user_name[sizeof(user_name) - 1] = '\0';
 			i++;
 			break;
@@ -122,7 +124,9 @@ main(int argc, char *argv[]) {
 				            "less than %u characters",
 				            GROUP_NAME_MAX_LENGTH);
 			}
-			strncpy(group_name, argv[i + 1], sizeof(group_name) - 1);
+			strncpy(group_name,
+			        argv[i + 1],
+			        sizeof(group_name) - 1);
 			group_name[sizeof(group_name) - 1] = '\0';
 			i++;
 			break;
