@@ -52,8 +52,8 @@ main(int argc, char *argv[]) {
 		switch (argument[1]) {
 		case 'd':
 			if (strlen(argv[i + 1]) >= DIRECTORY_MAX_LENGTH) {
-				print_error("error: directory length must be less than "
-				            "%u characters",
+				print_error("error: directory length must be "
+				            "less than %u characters",
 				            DIRECTORY_MAX_LENGTH);
 			}
 			snprintf(directory,
@@ -67,15 +67,16 @@ main(int argc, char *argv[]) {
 		case 'p':
 			port = atoi(argv[i + 1]);
 			if (port < 1 || port > 65535) {
-				print_error("error: port must be between 1 and 65535.");
+				print_error("error: port must be between 1 "
+				            "and 65535.");
 				return 1;
 			};
 			i++;
 			break;
 		case 'i':
 			if (strlen(argv[i + 1]) >= DIRECTORY_INDEX_MAX_LENGTH) {
-				print_error("error: directory index must be less than "
-				            "%u characters",
+				print_error("error: directory index must be "
+				            "less than %u characters",
 				            DIRECTORY_INDEX_MAX_LENGTH);
 			}
 			snprintf(directory_index,
@@ -87,8 +88,8 @@ main(int argc, char *argv[]) {
 			break;
 		case 'u':
 			if (strlen(argv[i + 1]) >= USER_NAME_MAX_LENGTH) {
-				print_error("error: the user name must be less than "
-				            "%u characters",
+				print_error("error: the user name must be "
+				            "less than %u characters",
 				            USER_NAME_MAX_LENGTH);
 			}
 			strncpy(user_name, argv[i + 1], sizeof(user_name) - 1);
@@ -97,8 +98,8 @@ main(int argc, char *argv[]) {
 			break;
 		case 'g':
 			if (strlen(argv[i + 1]) >= GROUP_NAME_MAX_LENGTH) {
-				print_error("error: the group name must be less than "
-				            "%u characters",
+				print_error("error: the group name must be "
+				            "less than %u characters",
 				            GROUP_NAME_MAX_LENGTH);
 			}
 			strncpy(group_name, argv[i + 1], sizeof(group_name) - 1);
@@ -132,17 +133,20 @@ main(int argc, char *argv[]) {
 	server_socket_fd = create_socket(port);
 
 	if (setgid(group->gr_gid) == -1) {
-		print_error("error: could not drop privileges to given group");
+		print_error("error: could not drop privileges to given "
+		            "group");
 		return 1;
 	}
 
 	if (setuid(user->pw_uid) == -1) {
-		print_error("error: could not drop privileges to given user");
+		print_error("error: could not drop privileges to given "
+		            "user");
 		return 1;
 	}
 
 	if (access(directory, R_OK) == -1) {
-		print_error("error: directory is nonexistent or inaccessible");
+		print_error("error: directory is nonexistent or "
+		            "inaccessible");
 		return 1;
 	}
 
@@ -152,7 +156,8 @@ main(int argc, char *argv[]) {
 	}
 
 	if (chdir("/") == -1) {
-		print_error("error: could not change directory after chrooting");
+		print_error("error: could not change directory after "
+		            "chrooting");
 		return 1;
 	}
 

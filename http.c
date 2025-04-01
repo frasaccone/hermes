@@ -26,7 +26,9 @@ parse_http_request(char *request) {
 	}
 
 	if (path_string != NULL) {
-		strncpy(result->path, path_string, HTTP_REQUEST_PATH_MAX_LENGTH - 1);
+		strncpy(result->path,
+		        path_string,
+		        HTTP_REQUEST_PATH_MAX_LENGTH - 1);
 		result->path[HTTP_REQUEST_PATH_MAX_LENGTH - 1] = '\0';
 	}
 
@@ -94,8 +96,8 @@ compose_http_response_full(struct http_response response) {
 	char *buffer;
 
 	/*
-	 * Read the comment inside the compose_http_response_head function in this
-	 * same file.
+	 * Read the comment inside the compose_http_response_head function in
+	 * this same file.
 	 */
 	size = strlen(template)
 	       + strlen(head)

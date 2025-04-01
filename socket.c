@@ -23,7 +23,9 @@ create_socket(unsigned int port) {
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons(port);
 
-	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(address)) == -1) {
+	if (bind(socket_fd,
+	         (struct sockaddr *)&address,
+	         sizeof(address)) == -1) {
 		print_error("error: bind socket to address");
 		return -1;
 	}
@@ -71,7 +73,8 @@ read_client_request(int client_socket_fd,
 	ssize_t bytes_received;
 
 	if (buffer == NULL || buffer_size == 0) {
-		print_error("error: invalid buffer provided in read_client_request");
+		print_error("error: invalid buffer provided in "
+		            "read_client_request");
 		return -1;
 	}
 

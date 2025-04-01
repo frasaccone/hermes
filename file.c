@@ -54,7 +54,8 @@ get_file_name(char *path) {
 	}
 
 	if (*character_after_last_slash == '\0') {
-		/* If path ends in '/', the file name will be considered empty */
+		/* If path ends in '/', the file name will be considered
+		   empty */
 		return "";
 	}
 
