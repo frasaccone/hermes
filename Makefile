@@ -15,4 +15,12 @@ hermes: $(SOURCES:.c=.o)
 clean:
 	rm -f hermes *.o
 
-.PHONY: all clean
+install: all
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp -f hermes $(DESTDIR)$(PREFIX)/bin
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/hermes
+	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
+	cp -f hermes.1 $(DESTDIR)$(MANPREFIX)/man1
+	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/hermes.1
+
+.PHONY: all clean install
