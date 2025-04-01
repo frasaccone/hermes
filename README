@@ -3,6 +3,8 @@ Hermes
 
 A minimalist GET/HEAD-only HTTP server for hosting static content.
 
+It does not support TLS: you might want to use a TLS reverse proxy instead.
+
 Build and install
 -----------------
 
