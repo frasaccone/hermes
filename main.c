@@ -192,6 +192,8 @@ main(int argc, char *argv[]) {
 		return 1;
 	}
 
+	print_program_info();
+
 	while (1) {
 		int client_socket_fd,
 		    file_readable;
