@@ -214,9 +214,43 @@ main(int argc, char *argv[]) {
 		file_readable = is_file_readable(normalised_path);
 
 		if (!file_readable) {
-			response.status = NOT_FOUND;
-			response.content_type = "text/plain";
-			response.body = "404 NOT FOUND";
+			char *index_path = malloc(strlen(normalised_path) +
+			                          sizeof(char) + /* "/" */
+			                          strlen(directory_index) +
+			                          1),
+			     *normalised_index_path,
+			     *index_file_extension,
+			     *index_mime_type;
+			int index_file_readable;
+
+			index_path[0] = '\0';
+			strcat(index_path, normalised_path);
+			strcat(index_path, "/");
+			strcat(index_path, directory_index);
+
+			normalised_index_path = get_normalised_path(
+			                        index_path);
+			index_file_extension = get_file_extension(
+			                       normalised_index_path);
+			index_mime_type = get_mime_type_from_extension(
+			                  index_file_extension);
+			index_file_readable = is_file_readable(
+			                      normalised_index_path);
+
+			free(index_path);
+
+			if (!index_file_readable) {
+				response.status = NOT_FOUND;
+				response.content_type = "text/plain";
+				response.body = "404 NOT FOUND";
+			} else {
+				struct file_content file
+				 = get_file_content(normalised_index_path);
+
+				response.status = OK;
+				response.content_type = index_mime_type;
+				response.body = file.content;
+			}
 		} else {
 			struct file_content file = get_file_content(
 			                           normalised_path);
