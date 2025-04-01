@@ -4,6 +4,8 @@ include config.mk
 
 SOURCES = main.c socket.c http.c utils.c file.c
 
+all: hermes
+
 hermes: $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $^
 
@@ -13,4 +15,4 @@ hermes: $(SOURCES:.c=.o)
 clean:
 	rm -f hermes *.o
 
-.PHONY: clean
+.PHONY: all clean
