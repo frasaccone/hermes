@@ -189,6 +189,7 @@ main(int argc, char *argv[]) {
 		     *file_extension,
 		     *mime_type;
 		struct http_request *request;
+		struct http_response response;
 
 		client_socket_fd = accept_client(server_socket_fd);
 
@@ -211,6 +212,37 @@ main(int argc, char *argv[]) {
 		file_extension = get_file_extension(normalised_path);
 		mime_type = get_mime_type_from_extension(file_extension);
 		file_readable = is_file_readable(normalised_path);
+
+		if (!file_readable) {
+			response.status = NOT_FOUND;
+			response.content_type = "text/plain";
+			response.body = "404 NOT FOUND";
+		} else {
+			struct file_content file = get_file_content(
+			                           normalised_path);
+
+			response.status = OK;
+			response.content_type = mime_type;
+			response.body = file.content;
+		}
+
+		switch (request->method) {
+		case GET:
+			send_to_socket(client_socket_fd,
+			               compose_http_response_full(response));
+			break;
+		case HEAD:
+			send_to_socket(client_socket_fd,
+			               compose_http_response_head(response));
+			break;
+		default:
+			response.status = METHOD_NOT_ALLOWED;
+			response.content_type = "text/plain";
+			response.body = "405 METHOD NOT ALLOWED";
+
+			send_to_socket(client_socket_fd,
+			               compose_http_response_full(response));
+		}
 
 		free(request_buffer);
 		close_socket(client_socket_fd);
