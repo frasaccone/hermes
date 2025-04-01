@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +17,8 @@ create_socket(unsigned int port) {
 	struct sockaddr_in address;
 
 	if (socket_fd == -1) {
-		print_error("error: socket creation");
+		print_error("error: create socket: %s",
+		            strerror(errno));
 		return -1;
 	}
 
@@ -25,7 +27,8 @@ create_socket(unsigned int port) {
 	               SO_REUSEADDR,
 	               &yes,
 	               sizeof(yes)) == -1) {
-		print_error("error: set SO_REUSEADDR to socket");
+		print_error("error: set SO_REUSEADDR to socket: %s",
+		            strerror(errno));
 	}
 
 	memset(&address, 0, sizeof(address));
@@ -36,12 +39,14 @@ create_socket(unsigned int port) {
 	if (bind(socket_fd,
 	         (struct sockaddr *)&address,
 	         sizeof(address)) == -1) {
-		print_error("error: bind socket to address");
+		print_error("error: bind socket to address: %s",
+		            strerror(errno));
 		return -1;
 	}
 
 	if (listen(socket_fd, 3) == -1) {
-		print_error("error: listen on socket");
+		print_error("error: listen on socket: %s",
+		            strerror(errno));
 		close(socket_fd);
 		return -1;
 	}
