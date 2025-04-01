@@ -132,18 +132,6 @@ main(int argc, char *argv[]) {
 
 	server_socket_fd = create_socket(port);
 
-	if (setgid(group->gr_gid) == -1) {
-		print_error("error: could not drop privileges to given "
-		            "group");
-		return 1;
-	}
-
-	if (setuid(user->pw_uid) == -1) {
-		print_error("error: could not drop privileges to given "
-		            "user");
-		return 1;
-	}
-
 	if (access(directory, R_OK) == -1) {
 		print_error("error: directory is nonexistent or "
 		            "inaccessible");
@@ -158,6 +146,18 @@ main(int argc, char *argv[]) {
 	if (chdir("/") == -1) {
 		print_error("error: could not change directory after "
 		            "chrooting");
+		return 1;
+	}
+
+	if (setgid(group->gr_gid) == -1) {
+		print_error("error: could not drop privileges to given "
+		            "group");
+		return 1;
+	}
+
+	if (setuid(user->pw_uid) == -1) {
+		print_error("error: could not drop privileges to given "
+		            "user");
 		return 1;
 	}
 
