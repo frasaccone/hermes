@@ -3,6 +3,31 @@
 
 #include <stdlib.h>
 
+static const struct {
+	const char *extension;
+	const char *type;
+} mime_types[] = {
+	{ "css",   "text/css" },
+	{ "gif",   "image/gif" },
+	{ "gz",    "application/gzip" },
+	{ "html",  "text/html" },
+	{ "htm",   "text/html" },
+	{ "ico",   "image/x-icon" },
+	{ "jpeg",  "image/jpeg" },
+	{ "jpg",   "image/jpeg" },
+	{ "js",    "application/javascript" },
+	{ "json",  "application/json" },
+	{ "mp3",   "audio/mpeg" },
+	{ "mp4",   "video/mp4" },
+	{ "pdf",   "application/pdf" },
+	{ "png",   "image/png" },
+	{ "tar",   "application/x-tar" },
+	{ "txt",   "text/plain" },
+	{ "wav",   "audio/wav" },
+	{ "xml",   "application/xml" },
+	{ "zip",   "application/zip" },
+};
+
 struct file_content {
 	char *content;
 	size_t length;
