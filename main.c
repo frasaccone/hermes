@@ -165,7 +165,8 @@ main(int argc, char *argv[]) {
 		int client_socket_fd,
 		    client_socket_size;
 		char *request_buffer = malloc(REQUEST_BUFFER_MAX_LENGTH),
-		     *normalised_path;
+		     *normalised_path,
+		     *file_extension;
 		struct http_request *request;
 
 		client_socket_fd = accept_client(server_socket_fd);
@@ -188,6 +189,7 @@ main(int argc, char *argv[]) {
 
 		request = parse_http_request(request_buffer);
 		normalised_path = get_normalised_path(request->path);
+		file_extension = get_file_extension(normalised_path);
 
 		free(request_buffer);
 		close_socket(client_socket_fd);
