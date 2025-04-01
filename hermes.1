@@ -1,0 +1,44 @@
+.Dd 2025-04-01
+.Dt HERMES 1
+.Os francescosaccone.com
+.Sh NAME
+.Nm hermes
+.Nd HTTP GET/HEAD-only web server for static content
+.Sh SYNOPSIS
+.Nm
+.Fl d Ar directory
+.Op Fl p Ar port
+.Op Fl i Ar file
+.Op Fl u Ar user
+.Op Fl g Ar group
+.Sh DESCRIPTION
+.Nm
+is a minimalist GET/HEAD-only HTTP server for hosting static content.
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl d Ar directory
+Chroot into
+.Ar directory
+and serve statically from there.
+.It Fl p Ar port
+Listen on port
+.Ar port
+for incoming connections.
+The default is 80.
+.It Fl i Ar file
+Use
+.Ar file
+as the directory index file.
+The default is "index.html".
+.It Fl u Ar user
+Drop privileges by setting the user ID to the ID of
+.Ar user
+.
+The default is "nobody".
+.It Fl g Ar group
+Drop privileges by setting the group ID to the ID of
+.Ar group
+.
+The default is "nogroup".
+.Sh AUTHORS
+.An Francesco Saccone Aq Mt francesco@francescosaccone.com
