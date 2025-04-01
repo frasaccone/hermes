@@ -11,12 +11,21 @@
 
 int
 create_socket(unsigned int port) {
-	int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	int socket_fd = socket(AF_INET, SOCK_STREAM, 0),
+	    yes = 1;
 	struct sockaddr_in address;
 
 	if (socket_fd == -1) {
 		print_error("error: socket creation");
 		return -1;
+	}
+
+	if (setsockopt(socket_fd,
+	               SOL_SOCKET,
+	               SO_REUSEADDR,
+	               &yes,
+	               sizeof(yes)) == -1) {
+		print_error("error: set SO_REUSEADDR to socket");
 	}
 
 	address.sin_family = AF_INET;
