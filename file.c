@@ -30,9 +30,9 @@ get_normalised_path(char *path) {
 	for (i = 0; path[i] != '\0'; i++) {
 		if (path[i] != '/' ||
 		    /* In the following conditions, we have path[i] == '/'. */
-		    i == 0 || /* Keep leading slash */
-		    path[i - 1] != '/' || /* No continous slashes */
-		    path[i + 1] != '\0' /* No trailing slash */) {
+		    i == 0 ||                /* Keep leading slash */
+		    path[i - 1] != '/' ||    /* No continous slashes */
+		    path[i + 1] != '\0') {   /* No trailing slash */
 			normalised[j] = path[i];
 			j++;
 		}
