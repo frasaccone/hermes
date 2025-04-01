@@ -23,4 +23,8 @@ install: all
 	cp -f hermes.1 $(DESTDIR)$(MANPREFIX)/man1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/hermes.1
 
-.PHONY: all clean install
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/hermes
+	rm -f $(DESTDIR)$(PREFIX)/man1/hermes.1
+
+.PHONY: all clean install uninstall
