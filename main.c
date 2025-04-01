@@ -225,7 +225,9 @@ main(int argc, char *argv[]) {
 
 			index_path[0] = '\0';
 			strcat(index_path, normalised_path);
-			strcat(index_path, "/");
+			if (strcmp(normalised_path, "/") != 0) {
+				strcat(index_path, "/");
+			}
 			strcat(index_path, directory_index);
 
 			normalised_index_path = get_normalised_path(
