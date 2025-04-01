@@ -41,6 +41,24 @@ get_normalised_path(char *path) {
 	return normalised;
 }
 
+char *
+get_file_name(char *path) {
+	char *last_slash = strrchr(path, '/'),
+	     *character_after_last_slash = last_slash + sizeof(char);
+
+	if (last_slash == NULL) {
+		/* If no slash occurs, the file name is the actual path */
+		return path;
+	}
+
+	if (*character_after_last_slash == '\0') {
+		/* If path ends in '/', the file name will be considered empty */
+		return "";
+	}
+
+	return character_after_last_slash;
+}
+
 struct file_content
 get_file_content(char *path) {
 	struct file_content result = { NULL, 0 };

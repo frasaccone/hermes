@@ -39,6 +39,9 @@ is_file_readable(char *path);
 char *
 get_normalised_path(char *path);
 
+char *
+get_file_name(char *path);
+
 /*
  * It returns the file_content instances of the file at given path.
  *
