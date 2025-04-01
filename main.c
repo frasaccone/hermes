@@ -12,6 +12,8 @@
 #include "socket.h"
 #include "utils.h"
 
+#define VERSION "0.1.0"
+
 #define REQUEST_BUFFER_MAX_LENGTH 104857600 * sizeof(char) /* 100 MiB */
 
 #define DIRECTORY_MAX_LENGTH 1024
@@ -24,6 +26,11 @@ print_usage(char *program_name) {
 	print_error("usage: %s -d directory [-p port] [-i file] [-u user] "
 	            "[-g group]",
 	            program_name);
+}
+
+void
+print_program_info() {
+	printf("Hermes v%s (c) Francesco Saccone\n", VERSION);
 }
 
 void handle_signal(int signal) {
