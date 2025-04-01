@@ -1,5 +1,6 @@
 #include <grp.h>
 #include <pwd.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,6 +26,19 @@ print_usage(char *program_name) {
 	            program_name);
 }
 
+void handle_signal(int signal) {
+	printf("\nTerminating Hermes...\n");
+
+	switch (signal) {
+	case SIGINT:
+	case SIGTERM:
+		exit(0);
+		break;
+	default:
+		exit(1);
+	}
+}
+
 int
 main(int argc, char *argv[]) {
 	char *program_name = argv[0],
@@ -37,6 +51,12 @@ main(int argc, char *argv[]) {
 	    is_directory_set = 0;
 	struct passwd *user;
 	struct group *group;
+
+	signal(SIGINT, handle_signal);
+	signal(SIGTERM, handle_signal);
+	signal(SIGSEGV, handle_signal);
+	signal(SIGABRT, handle_signal);
+	signal(SIGFPE, handle_signal);
 
 	for (i = 1; i < argc; i++) {
 		char *argument = argv[i];
