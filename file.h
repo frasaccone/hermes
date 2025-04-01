@@ -33,6 +33,9 @@ struct file_content {
 	size_t length;
 };
 
+char *
+get_mime_type_from_extension(char *extension);
+
 int
 is_file_readable(char *path);
 

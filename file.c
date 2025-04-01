@@ -5,6 +5,22 @@
 #include <string.h>
 #include <unistd.h>
 
+char *
+get_mime_type_from_extension(char *extension) {
+	char *default_type = "application/octet-stream";
+	size_t i,
+	       number_of_types = sizeof(mime_types)
+	                         / sizeof(mime_types[0]);
+
+	for (i = 0; i < number_of_types; i++) {
+		if (strcmp(mime_types[i].extension, extension) == 0) {
+			return mime_types[i].type;
+		}
+	}
+
+	return default_type;
+}
+
 int
 is_file_readable(char *path) {
 	return (access(path, R_OK) == 0);
