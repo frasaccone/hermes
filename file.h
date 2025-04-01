@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 static const struct {
-	const char *extension;
-	const char *type;
+	char *extension;
+	char *type;
 } mime_types[] = {
 	{ "css",   "text/css" },
 	{ "gif",   "image/gif" },
