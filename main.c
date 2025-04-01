@@ -248,7 +248,7 @@ main(int argc, char *argv[]) {
 			if (!index_file_readable) {
 				response.status = NOT_FOUND;
 				response.content_type = "text/plain";
-				response.body = "404 NOT FOUND";
+				response.body = "404 NOT FOUND\n";
 			} else {
 				struct file_content file
 				 = get_file_content(normalised_index_path);
@@ -278,7 +278,7 @@ main(int argc, char *argv[]) {
 		default:
 			response.status = METHOD_NOT_ALLOWED;
 			response.content_type = "text/plain";
-			response.body = "405 METHOD NOT ALLOWED";
+			response.body = "405 METHOD NOT ALLOWED\n";
 
 			send_to_socket(client_socket_fd,
 			               compose_http_response_full(response));
