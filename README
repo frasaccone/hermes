@@ -10,3 +10,10 @@ Build and install
 
 	$ make
 	# make install
+
+Dependencies
+------------
+
+- C compiler (C99)
+- libc
+- POSIX make (optional)
