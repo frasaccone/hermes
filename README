@@ -17,3 +17,8 @@ Dependencies
 - C compiler (C99)
 - libc
 - POSIX make (optional)
+
+Documentation
+-------------
+
+See the man page of hermes(1).
