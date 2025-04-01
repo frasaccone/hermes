@@ -6,6 +6,12 @@ SOURCES = main.c socket.c http.c utils.c file.c
 
 all: hermes
 
+options:
+	@echo "CC         = ${CC}"
+	@echo "CFLAGS     = ${CFLAGS}"
+	@echo "PREFIX     = ${PREFIX}"
+	@echo "MANPREFIX  = ${MANPREFIX}"
+
 hermes: $(SOURCES:.c=.o)
 	$(CC) $(CFLAGS) -o $@ $^
 
@@ -27,4 +33,4 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/hermes
 	rm -f $(DESTDIR)$(PREFIX)/man1/hermes.1
 
-.PHONY: all clean install uninstall
+.PHONY: all options clean install uninstall
